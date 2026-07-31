@@ -7,15 +7,19 @@ resource "aws_instance" "one" {
   ami           = "ami-0e5497a77ef21b5ac"
   instance_type = "t3.micro"
 
+  user_data = <<-EOF
+#!/bin/bash
+sudo apt update -y
+sudo apt install apache2 git -y
+sudo systemctl enable apache2
+sudo systemctl start apache2
+
+cd /tmp
+git clone https://github.com/Ironhack-Archive/online-clone-amazon.git
+sudo cp -r online-clone-amazon/* /var/www/html/
+EOF
+
   tags = {
     Name = "my-instance"
   }
 }
-
-#! /bin/bash
-sudo -i
-apt update
-apt install apache2  git -y
-git clone https://github.com/Ironhack-Archive/online-clone-amazon.git
-mv online-clone-amazon/* /var/www/html/
-
