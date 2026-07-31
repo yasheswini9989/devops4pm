@@ -11,6 +11,7 @@ resource "aws_instance" "one" {
     Name = "my-instance"
   }
 }
+
 #! /bin/bash
 sudo -i
 apt update
